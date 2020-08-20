@@ -9,7 +9,7 @@ use tungstenite::protocol::WebSocket;
 use tungstenite::client::AutoStream;
 use tungstenite::handshake::client::Response;
 
-static WEBSOCKET_URL: &str = "wss://stream.binance.com:9443/ws/";
+static WEBSOCKET_URL: &str = "wss://fstream.binance.com:9443/ws/";
 
 static OUTBOUND_ACCOUNT_INFO: &str = "outboundAccountInfo";
 static EXECUTION_REPORT: &str = "executionReport";
