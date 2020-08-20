@@ -43,7 +43,7 @@ impl Binance for Market {
 impl Binance for UserStream {
     fn new(api_key: Option<String>, secret_key: Option<String>) -> UserStream {
         UserStream {
-            client: Client::new(api_key, secret_key, API_HOST.to_string()),
+            client: Client::new(api_key, secret_key, FAPI_HOST.to_string()),
             recv_window: 5000,
         }
     }
