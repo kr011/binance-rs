@@ -3,7 +3,7 @@ use crate::client::*;
 use crate::errors::*;
 use serde_json::from_str;
 
-static USER_DATA_STREAM: &str = "/api/v3/userDataStream";
+static USER_DATA_STREAM: &str = "/fapi/v1/listenKey";
 
 #[derive(Clone)]
 pub struct UserStream {
