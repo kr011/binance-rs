@@ -743,7 +743,7 @@ pub struct FuturesAccountUpdateEvent {
     pub event_time: u64,
 
     #[serde(rename = "a")]
-    pub assets: Vec<FuturesAccountAssets>,
+    pub assets: FuturesAccountAssets,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
