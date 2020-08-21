@@ -21,6 +21,8 @@ static PARTIAL_ORDERBOOK: &str = "lastUpdateId";
 
 static DAYTICKER: &str = "24hrTicker";
 
+static ORDER_TRADE_UPDATE: &str = "ORDER_TRADE_UPDATE";
+
 #[allow(clippy::large_enum_variant)]
 pub enum WebsocketEvent {
     AccountUpdate(AccountUpdateEvent),
@@ -31,6 +33,7 @@ pub enum WebsocketEvent {
     Kline(KlineEvent),
     DepthOrderBook(DepthOrderBookEvent),
     BookTicker(BookTickerEvent),
+    OrderTradeUpdateEvent(OrderTradeUpdateEvent),
 }
 
 pub struct WebSockets<'a> {
@@ -111,6 +114,9 @@ impl<'a> WebSockets<'a> {
                         } else if msg.find(DEPTH_ORDERBOOK) != None {
                             let depth_orderbook: DepthOrderBookEvent = from_str(msg.as_str())?;
                             (self.handler)(WebsocketEvent::DepthOrderBook(depth_orderbook))?;
+                        } else if msg.find(ORDER_TRADE_UPDATE) != None {
+                            let order_trade_update: OrderTradeUpdateEvent = from_str(msg.as_str())?;
+                            (self.handler)(WebsocketEvent::OrderTradeUpdateEvent(order_trade_update))?;
                         }
                     }
                     Message::Ping(_) | Message::Pong(_) | Message::Binary(_) => {}

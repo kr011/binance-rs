@@ -443,6 +443,7 @@ pub struct OrderTradeEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+
 #[serde(rename_all = "camelCase")]
 pub struct TradesEvent {
     #[serde(rename = "e")]
@@ -724,4 +725,87 @@ pub(crate) mod string_or_float {
             StringOrFloat::Float(i) => Ok(i),
         }
     }
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
+#[serde(rename_all = "camelCase")]
+pub struct OrderTradeUpdateEvent {
+    #[serde(rename = "e")]
+    pub event_type: String,
+
+    #[serde(rename = "E")]
+    pub event_time: u64,
+
+    #[serde(rename = "o")]
+    pub order: OrderTradeUpdateOrder,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
+#[serde(rename_all = "camelCase")]
+pub struct OrderTradeUpdateOrder {
+    #[serde(rename = "s")]
+    pub symbol: String,
+
+    #[serde(rename = "c")]
+    pub new_client_order_id: String,
+
+    #[serde(rename = "S")]
+    pub side: String,
+
+    #[serde(rename = "o")]
+    pub order_type: String,
+
+    #[serde(rename = "f")]
+    pub time_in_force: String,
+
+    #[serde(rename = "q")]
+    pub qty: String,
+
+    #[serde(rename = "p")]
+    pub price: String,
+
+    #[serde(rename = "ap")]
+    pub avg_price: String,
+
+    #[serde(rename = "sp")]
+    pub stop_price: String,
+
+    #[serde(rename = "x")]
+    pub execution_type: String,
+
+    #[serde(rename = "X")]
+    pub order_status: String,
+
+    #[serde(rename = "i")]
+    pub order_id: u64,
+
+    #[serde(rename = "l")]
+    pub qty_last_filled_trade: String,
+
+    #[serde(rename = "z")]
+    pub accumulated_qty_filled_trades: String,
+
+    #[serde(rename = "L")]
+    pub price_last_filled_trade: String,
+
+    #[serde(rename = "n")]
+    pub commission: String,
+
+    #[serde(skip, rename = "N")]
+    pub asset_commisioned: Option<String>,
+
+    #[serde(rename = "T")]
+    pub trade_order_time: u64,
+
+    #[serde(rename = "t")]
+    pub trade_id: i64,
+
+    #[serde(rename = "b")]
+    pub bids_national: u64,
+
+    #[serde(rename = "a")]
+    pub ask_national: u64,
+
+    #[serde(rename = "m")]
+    pub is_buyer_maker: bool,
 }
