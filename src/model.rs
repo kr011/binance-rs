@@ -736,6 +736,9 @@ pub struct FuturesAccountUpdateEvent {
     #[serde(rename = "e")]
     pub event_type: String,
 
+    #[serde(skip, rename = "T")]
+    pub t_ignore: u64,
+
     #[serde(rename = "E")]
     pub event_time: u64,
 
@@ -751,6 +754,9 @@ pub struct FuturesAccountAssets {
 
     #[serde(rename = "P")]
     pub positions: Vec<FuturesAccountPosition>,
+
+    #[serde(skip, rename = "m")]
+    pub m_ignore: String,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
@@ -761,6 +767,9 @@ pub struct FuturesAccountBalance {
 
     #[serde(rename = "wb")]
     pub wallet_balance: String,
+
+    #[serde(rename = "cw")]
+    pub c_wallet: String,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
@@ -777,6 +786,18 @@ pub struct FuturesAccountPosition {
 
     #[serde(rename = "cr")]
     pub accumulated_realized: String,
+
+    #[serde(skip, rename = "up")]
+    pub up_ignore: String,
+
+    #[serde(skip, rename = "mt")]
+    pub mt_ignore: String,
+
+    #[serde(skip, rename = "iw")]
+    pub iw_ignore: String,
+
+    #[serde(skip, rename = "ps")]
+    pub ps_ignore: String,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
