@@ -117,6 +117,7 @@ impl<'a> WebSockets<'a> {
                             let depth_orderbook: DepthOrderBookEvent = from_str(msg.as_str())?;
                             (self.handler)(WebsocketEvent::DepthOrderBook(depth_orderbook))?;
                         } else if msg.find(ACCOUNT_UPDATE) != None {
+                            println!("DEBUG: {}", msg.as_str());
                             let futures_account_update: FuturesAccountUpdateEvent = from_str(msg.as_str())?;
                             (self.handler)(WebsocketEvent::FuturesAccountUpdateEvent(futures_account_update))?;
                         } else if msg.find(ORDER_TRADE_UPDATE) != None {
