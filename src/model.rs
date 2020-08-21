@@ -801,10 +801,10 @@ pub struct OrderTradeUpdateOrder {
     pub trade_id: i64,
 
     #[serde(skip, rename = "b")]
-    pub p_ignore: String,
+    pub b_ignore: String,
 
     #[serde(skip, rename = "a")]
-    pub p_ignore: String,
+    pub a_ignore: String,
 
     #[serde(rename = "m")]
     pub is_buyer_maker: bool,
