@@ -727,6 +727,58 @@ pub(crate) mod string_or_float {
     }
 }
 
+// new types from:
+// https://binanceapitest.github.io/Binance-Futures-API-doc/userdatastream/
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
+#[serde(rename_all = "camelCase")]
+pub struct FuturesAccountUpdateEvent {
+    #[serde(rename = "e")]
+    pub event_type: String,
+
+    #[serde(rename = "E")]
+    pub event_time: u64,
+
+    #[serde(rename = "a")]
+    pub assets: Vec<FuturesAccountAssets>,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
+#[serde(rename_all = "camelCase")]
+pub struct FuturesAccountAssets {
+    #[serde(rename = "B")]
+    pub balances: Vec<FuturesAccountBalance>,
+
+    #[serde(rename = "P")]
+    pub positions: Vec<FuturesAccountPosition>,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
+#[serde(rename_all = "camelCase")]
+pub struct FuturesAccountBalance {
+    #[serde(rename = "a")]
+    pub asset: String,
+
+    #[serde(rename = "wb")]
+    pub wallet_balance: String,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
+#[serde(rename_all = "camelCase")]
+pub struct FuturesAccountPosition {
+    #[serde(rename = "s")]
+    pub symbol: String,
+
+    #[serde(rename = "pa")]
+    pub position_amount: String,
+
+    #[serde(rename = "ep")]
+    pub entry_price: String,
+
+    #[serde(rename = "cr")]
+    pub accumulated_realized: String,
+}
+
 #[derive(Debug, Serialize, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct OrderTradeUpdateEvent {
