@@ -11,12 +11,12 @@ static ORDER_SIDE_BUY: &str = "BUY";
 static ORDER_SIDE_SELL: &str = "SELL";
 static TIME_IN_FORCE_GTC: &str = "GTC";
 
-static API_V3_ORDER: &str = "/api/v3/order";
+static API_V3_ORDER: &str = "/fapi/v1/order";
 
 /// Endpoint for test orders.
 ///
 /// Orders issued to this endpoint are validated, but not sent into the matching engine.
-static API_V3_ORDER_TEST: &str = "/api/v3/order/test";
+static API_V3_ORDER_TEST: &str = "/fapi/v1/order/test";
 
 #[derive(Clone)]
 pub struct Account {
@@ -39,7 +39,7 @@ impl Account {
         let parameters: BTreeMap<String, String> = BTreeMap::new();
 
         let request = build_signed_request(parameters, self.recv_window)?;
-        let data = self.client.get_signed("/api/v3/account", &request)?;
+        let data = self.client.get_signed("/fapi/v1/account", &request)?;
         let account_info: AccountInformation = from_str(data.as_str())?;
 
         Ok(account_info)
@@ -73,7 +73,7 @@ impl Account {
         parameters.insert("symbol".into(), symbol.into());
 
         let request = build_signed_request(parameters, self.recv_window)?;
-        let data = self.client.get_signed("/api/v3/openOrders", &request)?;
+        let data = self.client.get_signed("/fapi/v1/openOrders", &request)?;
         let order: Vec<Order> = from_str(data.as_str())?;
 
         Ok(order)
@@ -84,7 +84,7 @@ impl Account {
         let parameters: BTreeMap<String, String> = BTreeMap::new();
 
         let request = build_signed_request(parameters, self.recv_window)?;
-        let data = self.client.get_signed("/api/v3/openOrders", &request)?;
+        let data = self.client.get_signed("/fapi/v1/openOrders", &request)?;
         let order: Vec<Order> = from_str(data.as_str())?;
 
         Ok(order)
@@ -98,7 +98,7 @@ impl Account {
         let mut parameters: BTreeMap<String, String> = BTreeMap::new();
         parameters.insert("symbol".into(), symbol.into());
         let request = build_signed_request(parameters, self.recv_window)?;
-        let data = self.client.delete_signed("/api/v3/openOrders", &request)?;
+        let data = self.client.delete_signed("/fapi/v1/openOrders", &request)?;
         let order: Vec<Order> = from_str(data.as_str())?;
 
         Ok(order)
@@ -365,7 +365,7 @@ impl Account {
         parameters.insert("symbol".into(), symbol.into());
 
         let request = build_signed_request(parameters, self.recv_window)?;
-        let data = self.client.get_signed("/api/v3/myTrades", &request)?;
+        let data = self.client.get_signed("/fapi/v1/myTrades", &request)?;
         let trade_history: Vec<TradeHistory> = from_str(data.as_str())?;
 
         Ok(trade_history)
