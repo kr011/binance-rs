@@ -101,8 +101,8 @@ impl Account {
         let data = self.client.delete_signed("/fapi/v1/allOpenOrders", &request)?;
         let resp: FuturesCancelAllResp = from_str(data.as_str())?;
 
-        match resp.code.as_str() {
-            "200" => Ok(resp),
+        match resp.code {
+            200 => Ok(resp),
             _ => bail!("cancel_all_open_orders code != 200"),
         }
     }

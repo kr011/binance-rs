@@ -921,6 +921,6 @@ pub struct FuturesTransaction {
 #[derive(Debug, Serialize, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct FuturesCancelAllResp {
-    pub code: String,
+    pub code: i32,
     pub msg: String,
 }
