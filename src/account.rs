@@ -139,7 +139,7 @@ impl Account {
     }
 
     // Place a LIMIT order - BUY
-    pub fn limit_buy<S, F>(&self, symbol: S, qty: F, price: f64) -> Result<Transaction>
+    pub fn limit_buy<S, F>(&self, symbol: S, qty: F, price: f64) -> Result<FuturesTransaction>
     where
         S: Into<String>,
         F: Into<f64>,
@@ -156,7 +156,7 @@ impl Account {
         let request = build_signed_request(order, self.recv_window)?;
         let data = self.client.post_signed(API_V3_ORDER, &request)?;
         println!("BINANCE-RS DEBUG: {:?}", data);
-        let transaction: Transaction = from_str(data.as_str())?;
+        let transaction: FuturesTransaction = from_str(data.as_str())?;
 
         Ok(transaction)
     }
@@ -186,7 +186,7 @@ impl Account {
     }
 
     // Place a LIMIT order - SELL
-    pub fn limit_sell<S, F>(&self, symbol: S, qty: F, price: f64) -> Result<Transaction>
+    pub fn limit_sell<S, F>(&self, symbol: S, qty: F, price: f64) -> Result<FuturesTransaction>
     where
         S: Into<String>,
         F: Into<f64>,
@@ -202,7 +202,7 @@ impl Account {
         let order = self.build_order(sell);
         let request = build_signed_request(order, self.recv_window)?;
         let data = self.client.post_signed(API_V3_ORDER, &request)?;
-        let transaction: Transaction = from_str(data.as_str())?;
+        let transaction: FuturesTransaction = from_str(data.as_str())?;
 
         Ok(transaction)
     }
@@ -232,7 +232,7 @@ impl Account {
     }
 
     // Place a MARKET order - BUY
-    pub fn market_buy<S, F>(&self, symbol: S, qty: F) -> Result<Transaction>
+    pub fn market_buy<S, F>(&self, symbol: S, qty: F) -> Result<FuturesTransaction>
     where
         S: Into<String>,
         F: Into<f64>,
@@ -248,7 +248,7 @@ impl Account {
         let order = self.build_order(buy);
         let request = build_signed_request(order, self.recv_window)?;
         let data = self.client.post_signed(API_V3_ORDER, &request)?;
-        let transaction: Transaction = from_str(data.as_str())?;
+        let transaction: FuturesTransaction = from_str(data.as_str())?;
 
         Ok(transaction)
     }
@@ -278,7 +278,7 @@ impl Account {
     }
 
     // Place a MARKET order - SELL
-    pub fn market_sell<S, F>(&self, symbol: S, qty: F) -> Result<Transaction>
+    pub fn market_sell<S, F>(&self, symbol: S, qty: F) -> Result<FuturesTransaction>
     where
         S: Into<String>,
         F: Into<f64>,
@@ -294,7 +294,7 @@ impl Account {
         let order = self.build_order(sell);
         let request = build_signed_request(order, self.recv_window)?;
         let data = self.client.post_signed(API_V3_ORDER, &request)?;
-        let transaction: Transaction = from_str(data.as_str())?;
+        let transaction: FuturesTransaction = from_str(data.as_str())?;
 
         Ok(transaction)
     }

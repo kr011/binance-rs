@@ -882,3 +882,37 @@ pub struct OrderTradeUpdateOrder {
     #[serde(rename = "m")]
     pub is_buyer_maker: bool,
 }
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
+#[serde(rename_all = "camelCase")]
+pub struct FuturesTransaction {
+    pub order_id: u64,
+    pub symbol: String,
+    pub status: String,
+    pub client_order_id: String,
+    #[serde(with = "string_or_float")]
+    pub price: f64,
+    #[serde(with = "string_or_float")]
+    pub avg_price: f64,
+    #[serde(with = "string_or_float")]
+    pub orig_qty: f64,
+    #[serde(with = "string_or_float")]
+    pub executed_qty: f64,
+    #[serde(with = "string_or_float")]
+    pub cum_qty: f64,
+    #[serde(with = "string_or_float")]
+    pub cum_quote: f64,
+    pub time_in_force: String,
+    #[serde(rename = "type")]
+    pub type_name: String,
+    pub reduce_only: bool,
+    pub close_position: bool,
+    pub side: String,
+    pub position_side: String,
+    #[serde(with = "string_or_float")]
+    pub stop_price: f64,
+    pub working_type: String,
+    pub price_protect: String,
+    pub orig_type: String,
+    pub update_time: u64,
+}
