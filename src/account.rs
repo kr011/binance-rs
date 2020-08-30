@@ -155,7 +155,6 @@ impl Account {
         let order = self.build_order(buy);
         let request = build_signed_request(order, self.recv_window)?;
         let data = self.client.post_signed(API_V3_ORDER, &request)?;
-        println!("BINANCE-RS DEBUG: {:?}", data);
         let transaction: FuturesTransaction = from_str(data.as_str())?;
 
         Ok(transaction)

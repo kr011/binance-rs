@@ -139,6 +139,7 @@ pub struct Order {
 #[serde(rename_all = "camelCase")]
 pub struct OrderCanceled {
     pub symbol: String,
+    #[serde(skip)]
     pub orig_client_order_id: String,
     pub order_id: u64,
     pub client_order_id: String,
