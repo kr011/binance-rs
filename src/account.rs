@@ -98,7 +98,7 @@ impl Account {
         let mut parameters: BTreeMap<String, String> = BTreeMap::new();
         parameters.insert("symbol".into(), symbol.into());
         let request = build_signed_request(parameters, self.recv_window)?;
-        let data = self.client.delete_signed("/fapi/v1/openOrders", &request)?;
+        let data = self.client.delete_signed("/fapi/v1/allOpenOrders", &request)?;
         let order: Vec<Order> = from_str(data.as_str())?;
 
         Ok(order)
