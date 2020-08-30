@@ -91,7 +91,7 @@ impl Account {
     }
 
     // Cancel all open orders for ONE symbol
-    pub fn cancel_all_open_orders<S>(&self, symbol: S) -> Result<Vec<Order>>
+    pub fn cancel_all_open_orders<S>(&self, symbol: S) -> Result<FuturesCancelAllResp>
     where
         S: Into<String>,
     {
@@ -99,9 +99,12 @@ impl Account {
         parameters.insert("symbol".into(), symbol.into());
         let request = build_signed_request(parameters, self.recv_window)?;
         let data = self.client.delete_signed("/fapi/v1/allOpenOrders", &request)?;
-        let order: Vec<Order> = from_str(data.as_str())?;
+        let resp: FuturesCancelAllResp = from_str(data.as_str())?;
 
-        Ok(order)
+        match resp.code.as_str() {
+            "200" => Ok(resp),
+            _ => bail!("cancel_all_open_orders code != 200"),
+        }
     }
 
     // Check an order's status

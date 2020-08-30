@@ -917,3 +917,10 @@ pub struct FuturesTransaction {
     pub orig_type: String,
     pub update_time: u64,
 }
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
+#[serde(rename_all = "camelCase")]
+pub struct FuturesCancelAllResp {
+    pub code: String,
+    pub msg: String,
+}
