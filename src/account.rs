@@ -35,7 +35,7 @@ struct OrderRequest {
 
 impl Account {
     // Account Information
-    pub fn get_account(&self) -> Result<AccountInformationV2> {
+    pub fn get_account_v2_NOT_TESTED(&self) -> Result<AccountInformationV2> {
         let parameters: BTreeMap<String, String> = BTreeMap::new();
 
         let request = build_signed_request(parameters, self.recv_window)?;
@@ -43,6 +43,32 @@ impl Account {
         let account_info: AccountInformationV2 = from_str(data.as_str())?;
 
         Ok(account_info)
+    }
+
+    // Account Information
+    pub fn get_account(&self) -> Result<AccountInformation> {
+        let parameters: BTreeMap<String, String> = BTreeMap::new();
+
+        let request = build_signed_request(parameters, self.recv_window)?;
+        let data = self.client.get_signed("/fapi/v1/account", &request)?;
+        let account_info: AccountInformation = from_str(data.as_str())?;
+
+        Ok(account_info)
+    }
+
+    // Account Information
+    pub fn get_positions<S>(&self, symbol: S) -> Result<FuturesPositionV2>
+    where
+        S: Into<String>,
+    {
+        let mut parameters: BTreeMap<String, String> = BTreeMap::new();
+        parameters.insert("symbol".into(), symbol.into());
+
+        let request = build_signed_request(parameters, self.recv_window)?;
+        let data = self.client.get_signed("/fapi/v2/positionRisk", &request)?;
+        let futures_positions: FuturesPositionV2 = from_str(data.as_str())?;
+
+        Ok(futures_positions)
     }
 
     // Balance for ONE Asset

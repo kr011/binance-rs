@@ -980,3 +980,20 @@ pub struct PositionV2 {
     pub max_notional: String,
     pub position_side: String,
 }
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
+#[serde(rename_all = "camelCase")]
+pub struct FuturesPositionV2 {
+    pub entry_price: String,
+    pub margin_type: String,
+    pub is_auto_add_margin: bool,
+    pub isolated_margin: String,
+    pub leverage: String,
+    pub liquidation_price: String,
+    pub mark_price: String,
+    pub max_notional_value: String,
+    pub position_amt: String,
+    pub symbol: String,
+    pub un_realized_profit: String,
+    pub position_side: String,
+}
