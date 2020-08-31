@@ -986,7 +986,7 @@ pub struct PositionV2 {
 pub struct FuturesPositionV2 {
     pub entry_price: String,
     pub margin_type: String,
-    pub is_auto_add_margin: bool,
+    pub is_auto_add_margin: String,
     pub isolated_margin: String,
     pub leverage: String,
     pub liquidation_price: String,
