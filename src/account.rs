@@ -35,12 +35,12 @@ struct OrderRequest {
 
 impl Account {
     // Account Information
-    pub fn get_account(&self) -> Result<AccountInformation> {
+    pub fn get_account(&self) -> Result<AccountInformationV2> {
         let parameters: BTreeMap<String, String> = BTreeMap::new();
 
         let request = build_signed_request(parameters, self.recv_window)?;
-        let data = self.client.get_signed("/fapi/v1/account", &request)?;
-        let account_info: AccountInformation = from_str(data.as_str())?;
+        let data = self.client.get_signed("/fapi/v2/account", &request)?;
+        let account_info: AccountInformationV2 = from_str(data.as_str())?;
 
         Ok(account_info)
     }

@@ -953,7 +953,7 @@ pub struct AccountInformationV2 {
 pub struct AssetV2 {
     pub asset: String,
     pub wallet_balance: String,
-    pub unrealized_profit: String
+    pub unrealized_profit: String,
     pub margin_balance: String,
     pub maint_margin: String,
     pub initial_margin: String,
