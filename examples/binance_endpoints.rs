@@ -58,6 +58,11 @@ fn account() {
         Err(e) => println!("Error: {}", e),
     }
 
+    match account.get_positions("WTCETH") {
+        Ok(answer) => println!("{:?}", answer),
+        Err(e) => println!("Error: {}", e),
+    }
+
     match account.get_open_orders("WTCETH") {
         Ok(answer) => println!("{:?}", answer),
         Err(e) => println!("Error: {}", e),
