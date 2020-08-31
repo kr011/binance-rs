@@ -57,16 +57,17 @@ impl Account {
     }
 
     // Account Information
-    pub fn get_positions<S>(&self, symbol: S) -> Result<FuturesPositionV2>
+    pub fn get_positions<S>(&self, symbol: S) -> Result<Vec<FuturesPositionV2>>
     where
         S: Into<String>,
     {
+
         let mut parameters: BTreeMap<String, String> = BTreeMap::new();
         parameters.insert("symbol".into(), symbol.into());
 
         let request = build_signed_request(parameters, self.recv_window)?;
         let data = self.client.get_signed("/fapi/v2/positionRisk", &request)?;
-        let futures_positions: FuturesPositionV2 = from_str(data.as_str())?;
+        let futures_positions: Vec<FuturesPositionV2> = from_str(data.as_str())?;
 
         Ok(futures_positions)
     }
