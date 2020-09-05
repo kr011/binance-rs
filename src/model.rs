@@ -958,7 +958,7 @@ pub struct AssetV2 {
     pub maint_margin: String,
     pub initial_margin: String,
     pub position_initial_margin: String,
-    pub openOrder_initial_margin: String,
+    pub open_order_initial_margin: String,
     pub cross_wallet_balance: String,
     pub cross_un_pnl: String,
     pub available_balance: String,
