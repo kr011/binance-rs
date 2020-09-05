@@ -729,7 +729,7 @@ pub(crate) mod string_or_float {
 }
 
 // new types from:
-// https://binanceapitest.github.io/Binance-Futures-API-doc/userdatastream/
+// https://binance-docs.github.io/apidocs/futures/en/#event-balance-and-position-update
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
@@ -788,8 +788,8 @@ pub struct FuturesAccountPosition {
     #[serde(rename = "cr")]
     pub accumulated_realized: String,
 
-    #[serde(skip, rename = "up")]
-    pub up_ignore: String,
+    #[serde(rename = "up")]
+    pub unrealized_pnl: String,
 
     #[serde(skip, rename = "mt")]
     pub mt_ignore: String,
