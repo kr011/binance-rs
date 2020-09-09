@@ -10,6 +10,7 @@ static ORDER_TYPE_MARKET: &str = "MARKET";
 static ORDER_SIDE_BUY: &str = "BUY";
 static ORDER_SIDE_SELL: &str = "SELL";
 static TIME_IN_FORCE_GTC: &str = "GTC";
+static TIME_IN_FORCE_GTX: &str = "GTX";
 
 static API_V3_ORDER: &str = "/fapi/v1/order";
 
@@ -180,7 +181,7 @@ impl Account {
             price,
             order_side: ORDER_SIDE_BUY.to_string(),
             order_type: ORDER_TYPE_LIMIT.to_string(),
-            time_in_force: TIME_IN_FORCE_GTC.to_string(),
+            time_in_force: TIME_IN_FORCE_GTX.to_string(),
         };
         let order = self.build_order(buy);
         let request = build_signed_request(order, self.recv_window)?;
@@ -204,7 +205,7 @@ impl Account {
             price,
             order_side: ORDER_SIDE_BUY.to_string(),
             order_type: ORDER_TYPE_LIMIT.to_string(),
-            time_in_force: TIME_IN_FORCE_GTC.to_string(),
+            time_in_force: TIME_IN_FORCE_GTX.to_string(),
         };
         let order = self.build_order(buy);
         let request = build_signed_request(order, self.recv_window)?;
@@ -226,7 +227,7 @@ impl Account {
             price,
             order_side: ORDER_SIDE_SELL.to_string(),
             order_type: ORDER_TYPE_LIMIT.to_string(),
-            time_in_force: TIME_IN_FORCE_GTC.to_string(),
+            time_in_force: TIME_IN_FORCE_GTX.to_string(),
         };
         let order = self.build_order(sell);
         let request = build_signed_request(order, self.recv_window)?;
@@ -250,7 +251,7 @@ impl Account {
             price,
             order_side: ORDER_SIDE_SELL.to_string(),
             order_type: ORDER_TYPE_LIMIT.to_string(),
-            time_in_force: TIME_IN_FORCE_GTC.to_string(),
+            time_in_force: TIME_IN_FORCE_GTX.to_string(),
         };
         let order = self.build_order(sell);
         let request = build_signed_request(order, self.recv_window)?;
