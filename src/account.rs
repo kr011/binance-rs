@@ -12,7 +12,7 @@ static ORDER_SIDE_SELL: &str = "SELL";
 static TIME_IN_FORCE_GTC: &str = "GTC";
 static TIME_IN_FORCE_GTX: &str = "GTX";
 static NEW_ORDER_RESP_TYPE_RESULT: &str = "RESULT";
-static NEW_ORDER_RESP_TYPE_ACK: &str = "ACK";
+// static NEW_ORDER_RESP_TYPE_ACK: &str = "ACK";
 
 static API_V3_ORDER: &str = "/fapi/v1/order";
 
@@ -185,7 +185,8 @@ impl Account {
             order_side: ORDER_SIDE_BUY.to_string(),
             order_type: ORDER_TYPE_LIMIT.to_string(),
             time_in_force: TIME_IN_FORCE_GTX.to_string(),
-            new_order_resp_type: NEW_ORDER_RESP_TYPE_ACK.to_string(),
+            // new_order_resp_type: NEW_ORDER_RESP_TYPE_ACK.to_string(),
+            new_order_resp_type: NEW_ORDER_RESP_TYPE_RESULT.to_string(),
         };
         let order = self.build_order(buy);
         let request = build_signed_request(order, self.recv_window)?;
@@ -210,7 +211,8 @@ impl Account {
             order_side: ORDER_SIDE_BUY.to_string(),
             order_type: ORDER_TYPE_LIMIT.to_string(),
             time_in_force: TIME_IN_FORCE_GTX.to_string(),
-            new_order_resp_type: NEW_ORDER_RESP_TYPE_ACK.to_string(),
+            // new_order_resp_type: NEW_ORDER_RESP_TYPE_ACK.to_string(),
+            new_order_resp_type: NEW_ORDER_RESP_TYPE_RESULT.to_string(),
         };
         let order = self.build_order(buy);
         let request = build_signed_request(order, self.recv_window)?;
@@ -233,7 +235,8 @@ impl Account {
             order_side: ORDER_SIDE_SELL.to_string(),
             order_type: ORDER_TYPE_LIMIT.to_string(),
             time_in_force: TIME_IN_FORCE_GTX.to_string(),
-            new_order_resp_type: NEW_ORDER_RESP_TYPE_ACK.to_string(),
+            // new_order_resp_type: NEW_ORDER_RESP_TYPE_ACK.to_string(),
+            new_order_resp_type: NEW_ORDER_RESP_TYPE_RESULT.to_string(),
         };
         let order = self.build_order(sell);
         let request = build_signed_request(order, self.recv_window)?;
@@ -258,7 +261,8 @@ impl Account {
             order_side: ORDER_SIDE_SELL.to_string(),
             order_type: ORDER_TYPE_LIMIT.to_string(),
             time_in_force: TIME_IN_FORCE_GTX.to_string(),
-            new_order_resp_type: NEW_ORDER_RESP_TYPE_ACK.to_string(),
+            // new_order_resp_type: NEW_ORDER_RESP_TYPE_ACK.to_string(),
+            new_order_resp_type: NEW_ORDER_RESP_TYPE_RESULT.to_string(),
         };
         let order = self.build_order(sell);
         let request = build_signed_request(order, self.recv_window)?;
