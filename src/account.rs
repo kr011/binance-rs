@@ -354,7 +354,7 @@ impl Account {
             order_side: ORDER_SIDE_SELL.to_string(),
             order_type: ORDER_TYPE_MARKET.to_string(),
             time_in_force: TIME_IN_FORCE_GTC.to_string(),
-            // new_order_resp_type: NEW_ORDER_RESP_TYPE_RESULT.to_string(),
+            new_order_resp_type: NEW_ORDER_RESP_TYPE_RESULT.to_string(),
         };
         let order = self.build_order(sell);
         let request = build_signed_request(order, self.recv_window)?;
