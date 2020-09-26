@@ -933,7 +933,7 @@ pub struct FuturesOrder {
     pub orig_qty: f64,
     #[serde(with = "string_or_float")]
     pub executed_qty: f64,
-    #[serde(with = "string_or_float")]
+    #[serde(skip)]
     pub cum_qty: f64,
     #[serde(with = "string_or_float")]
     pub cum_quote: f64,
@@ -948,6 +948,7 @@ pub struct FuturesOrder {
     pub stop_price: f64,
     pub working_type: String,
     pub orig_type: String,
+    pub time: u64,
     pub update_time: u64,
     #[serde(skip)]
     pub activate_price: String,
