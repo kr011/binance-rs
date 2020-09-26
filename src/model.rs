@@ -920,6 +920,43 @@ pub struct FuturesTransaction {
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
+pub struct FuturesOrder {
+    pub order_id: u64,
+    pub symbol: String,
+    pub status: String,
+    pub client_order_id: String,
+    #[serde(with = "string_or_float")]
+    pub price: f64,
+    #[serde(with = "string_or_float")]
+    pub avg_price: f64,
+    #[serde(with = "string_or_float")]
+    pub orig_qty: f64,
+    #[serde(with = "string_or_float")]
+    pub executed_qty: f64,
+    #[serde(with = "string_or_float")]
+    pub cum_qty: f64,
+    #[serde(with = "string_or_float")]
+    pub cum_quote: f64,
+    pub time_in_force: String,
+    #[serde(rename = "type")]
+    pub type_name: String,
+    pub reduce_only: bool,
+    pub close_position: bool,
+    pub side: String,
+    pub position_side: String,
+    #[serde(with = "string_or_float")]
+    pub stop_price: f64,
+    pub working_type: String,
+    pub orig_type: String,
+    pub update_time: u64,
+    #[serde(skip)]
+    pub activate_price: String,
+    #[serde(skip)]
+    pub price_rate: String,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct FuturesCancelAllResp {
     pub code: i32,
     pub msg: String,
