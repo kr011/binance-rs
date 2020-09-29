@@ -39,7 +39,7 @@ struct OrderRequest {
 
 impl Account {
     // Account Information
-    pub fn get_account_v2_NOT_TESTED(&self) -> Result<AccountInformationV2> {
+    pub fn get_account_v2(&self) -> Result<AccountInformationV2> {
         let parameters: BTreeMap<String, String> = BTreeMap::new();
 
         let request = build_signed_request(parameters, self.recv_window)?;
