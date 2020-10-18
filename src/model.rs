@@ -143,6 +143,7 @@ pub struct OrderCanceled {
     pub orig_client_order_id: String,
     pub order_id: u64,
     pub client_order_id: String,
+    pub update_time: u64,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
