@@ -144,6 +144,12 @@ pub struct OrderCanceled {
     pub order_id: u64,
     pub client_order_id: String,
     pub update_time: u64,
+    #[serde(with = "string_or_float")]
+    pub cum_qty: f64,
+    #[serde(with = "string_or_float")]
+    pub orig_qty: f64,
+    #[serde(with = "string_or_float")]
+    pub price: f64,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
