@@ -920,7 +920,7 @@ pub struct FuturesTransaction {
     #[serde(with = "string_or_float")]
     pub stop_price: f64,
     pub working_type: String,
-    pub price_protect: String,
+    pub price_protect: bool,
     pub orig_type: String,
     pub update_time: u64,
 }
