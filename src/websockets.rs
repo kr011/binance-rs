@@ -85,7 +85,7 @@ impl<'a> WebSockets<'a> {
                 let value: serde_json::Value = match serde_json::from_str(message.to_text()?) {
                     Ok(val) => val,
                     Err(e) => {
-                        bail!("BINANCE DEBUG Err={:?} test={:?}", e, message.to_text().unwrap());
+                        bail!("BINANCE DEBUG Err={:?} text={:?} is_empty={}", e, message.to_text().unwrap(), message.is_empty());
                     }
                 };
 
