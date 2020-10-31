@@ -82,15 +82,10 @@ impl<'a> WebSockets<'a> {
         while running.load(Ordering::Relaxed) {
             if let Some(ref mut socket) = self.socket {
                 let message = socket.0.read_message()?;
-                let value: serde_json::Value = match serde_json::from_str(message.to_text()?) {
-                    Ok(val) => val,
-                    Err(e) => {
-                        bail!("BINANCE DEBUG Err={:?} text={:?} is_empty={}", e, message.to_text().unwrap(), message.is_empty());
-                    }
-                };
 
                 match message {
                     Message::Text(msg) => {
+                        let value: serde_json::Value = serde_json::from_str(&msg)?;
                         if value["u"] != serde_json::Value::Null &&
                             value["s"] != serde_json::Value::Null &&
                             value["b"] != serde_json::Value::Null &&
