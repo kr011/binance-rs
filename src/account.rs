@@ -122,7 +122,6 @@ impl Account {
 
         let request = build_signed_request(parameters, self.recv_window)?;
         let data = self.client.get_signed("/fapi/v1/income", &request)?;
-        println!("DEBUG >>>>>>>>>>>>>>>> {:?}", data);
         let incomes: Vec<FuturesIncome> = from_str(data.as_str())?;
 
         Ok(incomes)
