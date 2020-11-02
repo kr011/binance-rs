@@ -1054,5 +1054,5 @@ pub struct FuturesIncome {
     pub info: String,
     pub time: u64,
     pub tran_id: u64,
-    pub trade_id: u64,
+    pub trade_id: String,
 }
