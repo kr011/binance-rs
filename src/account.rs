@@ -111,7 +111,7 @@ impl Account {
     }
 
     // Income since
-    pub fn get_income<S, T>(&self, symbol: S, start_time: T) -> Result<Vec<FuturesIncome>>
+    pub fn get_incomes<S, T>(&self, symbol: S, start_time: T) -> Result<Vec<FuturesIncome>>
     where
         S: Into<String>,
         T: Into<u64>,
