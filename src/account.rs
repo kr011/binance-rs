@@ -118,7 +118,7 @@ impl Account {
     {
         let mut parameters: BTreeMap<String, String> = BTreeMap::new();
         parameters.insert("symbol".into(), symbol.into());
-        parameters.insert("startTime".into(), since_time.into());
+        parameters.insert("startTime".into(), start_time.into());
 
         let request = build_signed_request(parameters, self.recv_window)?;
         let data = self.client.get_signed("/fapi/v1/income", &request)?;
