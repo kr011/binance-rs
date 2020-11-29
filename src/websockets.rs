@@ -87,10 +87,10 @@ impl<'a> WebSockets<'a> {
                 match message {
                     Message::Text(msg) => {
                         let stream_val: serde_json::Value = serde_json::from_str(&msg)?;
-                        // println!("XXXXXXXXXXXXXXXXXXXXX {:?}", stream_val);
                         match &stream_val["stream"] {
                             serde_json::Value::String(stream_name) => {
                                 let value: serde_json::Value = stream_val["data"].clone();
+                                println!("XXXXXXXXXXXXXXXXXXXXX {:?}", value);
 
                                 match value.as_str() {
                                     Some(data_msg) => {
