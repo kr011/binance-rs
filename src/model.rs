@@ -1056,3 +1056,28 @@ pub struct FuturesIncome {
     pub tran_id: u64,
     pub trade_id: String,
 }
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
+#[serde(rename_all = "camelCase")]
+pub struct FuturesFunding {
+    #[serde(rename = "e")]
+    pub mark_price_update: String,
+
+    #[serde(rename = "E")]
+    pub event_time: u64,
+
+    #[serde(rename = "s")]
+    pub symbol: String,
+
+    #[serde(rename = "p")]
+    pub mark_price: String,
+
+    #[serde(rename = "i")]
+    pub index_price: String,
+
+    #[serde(rename = "r")]
+    pub funding_rate: String,
+
+    #[serde(rename = "T")]
+    pub next_funding_time: u64,
+}
