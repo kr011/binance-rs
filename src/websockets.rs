@@ -97,12 +97,12 @@ impl<'a> WebSockets<'a> {
                                     }
                                     else {
                                         let stream_data = stream_val["data"].as_object().unwrap();
-                                        if stream_data["u"] != serde_json::Value::Null &&
-                                            stream_data["s"] != serde_json::Value::Null &&
-                                            stream_data["b"] != serde_json::Value::Null &&
-                                            stream_data["B"] != serde_json::Value::Null &&
-                                            stream_data["a"] != serde_json::Value::Null &&
-                                            stream_data["A"] != serde_json::Value::Null
+                                        if stream_data.get("u") != None &&
+                                            stream_data.get("s") != None &&
+                                            stream_data.get("b") != None &&
+                                            stream_data.get("B") != None &&
+                                            stream_data.get("a") != None &&
+                                            stream_data.get("A") != None
                                         {
                                             let book_ticker: BookTickerEvent = from_value(stream_val["data"].take()).unwrap();
                                             (self.handler)(WebsocketEvent::BookTicker(book_ticker))?;
