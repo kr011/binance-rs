@@ -90,10 +90,10 @@ impl<'a> WebSockets<'a> {
                         match &stream_val["stream"] {
                             serde_json::Value::String(stream_name) => {
                                 let value: serde_json::Value = stream_val["data"].clone();
-                                println!("XXXXXXXXXXXXXXXXXXXXX {:?}", value);
 
                                 match value.as_str() {
                                     Some(data_msg) => {
+                                        println!("XXXXXXXXXXXXXXXXXXXXX {:?}", data_msg);
                                         if stream_name.contains("markPrice") {
                                             let futures_funding: FuturesFunding = from_str(data_msg)?;
                                             (self.handler)(WebsocketEvent::FuturesFunding(futures_funding))?;
