@@ -2,6 +2,7 @@ use crate::model::*;
 use crate::errors::*;
 use url::Url;
 use serde_json::from_str;
+use serde_json::from_value;
 
 use std::sync::atomic::{AtomicBool, Ordering};
 use tungstenite::{connect, Message};
@@ -89,56 +90,51 @@ impl<'a> WebSockets<'a> {
                         let stream_val: serde_json::Value = serde_json::from_str(&msg)?;
                         match &stream_val["stream"] {
                             serde_json::Value::String(stream_name) => {
-                                let value: serde_json::Value = stream_val["data"].clone();
-                                println!("XXXXXXXXXXXXXXXXXXXXX {:?}", value);
-
-                                match value.as_str() {
-                                    Some(data_msg) => {
-                                        if stream_name.contains("markPrice") {
-                                            let futures_funding: FuturesFunding = from_str(data_msg)?;
-                                            (self.handler)(WebsocketEvent::FuturesFunding(futures_funding))?;
+                                if stream_val["data"].is_object() {
+                                    if stream_name.contains("markPrice") {
+                                        let futures_funding: FuturesFunding = from_value(stream_val["data"]).unwrap();
+                                        (self.handler)(WebsocketEvent::FuturesFunding(futures_funding))?;
+                                    }
+                                    else {
+                                        let stream_data = stream_val["data"].as_object().unwrap();
+                                        if stream_data["u"] != serde_json::Value::Null &&
+                                            stream_data["s"] != serde_json::Value::Null &&
+                                            stream_data["b"] != serde_json::Value::Null &&
+                                            stream_data["B"] != serde_json::Value::Null &&
+                                            stream_data["a"] != serde_json::Value::Null &&
+                                            stream_data["A"] != serde_json::Value::Null
+                                        {
+                                            let book_ticker: BookTickerEvent = from_value(stream_val["data"]).unwrap()?;
+                                            (self.handler)(WebsocketEvent::BookTicker(book_ticker))?;
+                                        } else if msg.find(OUTBOUND_ACCOUNT_INFO) != None {
+                                            let account_update: AccountUpdateEvent = from_value(stream_val["data"]).unwrap()?;
+                                            (self.handler)(WebsocketEvent::AccountUpdate(account_update))?;
+                                        } else if msg.find(EXECUTION_REPORT) != None {
+                                            let order_trade: OrderTradeEvent = from_value(stream_val["data"]).unwrap()?;
+                                            (self.handler)(WebsocketEvent::OrderTrade(order_trade))?;
+                                        } else if msg.find(AGGREGATED_TRADE) != None {
+                                            let trade: TradesEvent = from_value(stream_val["data"]).unwrap()?;
+                                            (self.handler)(WebsocketEvent::Trade(trade))?;
+                                        } else if msg.find(DAYTICKER) != None {
+                                            let trades: Vec<DayTickerEvent> = from_value(stream_val["data"]).unwrap()?;
+                                            (self.handler)(WebsocketEvent::DayTicker(trades))?;
+                                        } else if msg.find(KLINE) != None {
+                                            let kline: KlineEvent = from_value(stream_val["data"]).unwrap()?;
+                                            (self.handler)(WebsocketEvent::Kline(kline))?;
+                                        } else if msg.find(PARTIAL_ORDERBOOK) != None {
+                                            let partial_orderbook: OrderBook = from_value(stream_val["data"]).unwrap()?;
+                                            (self.handler)(WebsocketEvent::OrderBook(partial_orderbook))?;
+                                        } else if msg.find(DEPTH_ORDERBOOK) != None {
+                                            let depth_orderbook: DepthOrderBookEvent = from_value(stream_val["data"]).unwrap()?;
+                                            (self.handler)(WebsocketEvent::DepthOrderBook(depth_orderbook))?;
+                                        } else if msg.find(ACCOUNT_UPDATE) != None {
+                                            let futures_account_update: FuturesAccountUpdateEvent = from_value(stream_val["data"]).unwrap()?;
+                                            (self.handler)(WebsocketEvent::FuturesAccountUpdateEvent(futures_account_update))?;
+                                        } else if msg.find(ORDER_TRADE_UPDATE) != None {
+                                            let order_trade_update: OrderTradeUpdateEvent = from_value(stream_val["data"]).unwrap()?;
+                                            (self.handler)(WebsocketEvent::OrderTradeUpdateEvent(order_trade_update))?;
                                         }
-                                        else {
-                                            if value["u"] != serde_json::Value::Null &&
-                                                value["s"] != serde_json::Value::Null &&
-                                                value["b"] != serde_json::Value::Null &&
-                                                value["B"] != serde_json::Value::Null &&
-                                                value["a"] != serde_json::Value::Null &&
-                                                value["A"] != serde_json::Value::Null
-                                            {
-                                                let book_ticker: BookTickerEvent = from_str(data_msg)?;
-                                                (self.handler)(WebsocketEvent::BookTicker(book_ticker))?;
-                                            } else if msg.find(OUTBOUND_ACCOUNT_INFO) != None {
-                                                let account_update: AccountUpdateEvent = from_str(data_msg)?;
-                                                (self.handler)(WebsocketEvent::AccountUpdate(account_update))?;
-                                            } else if msg.find(EXECUTION_REPORT) != None {
-                                                let order_trade: OrderTradeEvent = from_str(data_msg)?;
-                                                (self.handler)(WebsocketEvent::OrderTrade(order_trade))?;
-                                            } else if msg.find(AGGREGATED_TRADE) != None {
-                                                let trade: TradesEvent = from_str(data_msg)?;
-                                                (self.handler)(WebsocketEvent::Trade(trade))?;
-                                            } else if msg.find(DAYTICKER) != None {
-                                                let trades: Vec<DayTickerEvent> = from_str(data_msg)?;
-                                                (self.handler)(WebsocketEvent::DayTicker(trades))?;
-                                            } else if msg.find(KLINE) != None {
-                                                let kline: KlineEvent = from_str(data_msg)?;
-                                                (self.handler)(WebsocketEvent::Kline(kline))?;
-                                            } else if msg.find(PARTIAL_ORDERBOOK) != None {
-                                                let partial_orderbook: OrderBook = from_str(data_msg)?;
-                                                (self.handler)(WebsocketEvent::OrderBook(partial_orderbook))?;
-                                            } else if msg.find(DEPTH_ORDERBOOK) != None {
-                                                let depth_orderbook: DepthOrderBookEvent = from_str(data_msg)?;
-                                                (self.handler)(WebsocketEvent::DepthOrderBook(depth_orderbook))?;
-                                            } else if msg.find(ACCOUNT_UPDATE) != None {
-                                                let futures_account_update: FuturesAccountUpdateEvent = from_str(data_msg)?;
-                                                (self.handler)(WebsocketEvent::FuturesAccountUpdateEvent(futures_account_update))?;
-                                            } else if msg.find(ORDER_TRADE_UPDATE) != None {
-                                                let order_trade_update: OrderTradeUpdateEvent = from_str(data_msg)?;
-                                                (self.handler)(WebsocketEvent::OrderTradeUpdateEvent(order_trade_update))?;
-                                            }
-                                        }
-                                    },
-                                    None => ()
+                                    }
                                 }
                             },
                             _ => (),
