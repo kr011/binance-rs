@@ -9,7 +9,7 @@ use tungstenite::protocol::WebSocket;
 use tungstenite::client::AutoStream;
 use tungstenite::handshake::client::Response;
 
-static WEBSOCKET_URL: &str = "wss://fstream.binance.com/ws/";
+static WEBSOCKET_URL: &str = "wss://fstream.binance.com/stream?streams=";
 
 static OUTBOUND_ACCOUNT_INFO: &str = "outboundAccountInfo";
 static EXECUTION_REPORT: &str = "executionReport";
@@ -85,6 +85,11 @@ impl<'a> WebSockets<'a> {
 
                 match message {
                     Message::Text(msg) => {
+                        let stream_val: serde_json::Value = serde_json::from_str(&msg)?;
+                        println!("XXXXXXXXXXXXXXXXXXXXX {:?}", stream_val);
+                        if stream_val["stream"] == "!markPrice@arr@3s" {
+                            println!(">>>>>>>>>>>>> {:?}", stream_val["stream"]);
+                        }
                         let value: serde_json::Value = serde_json::from_str(&msg)?;
                         if value["u"] != serde_json::Value::Null &&
                             value["s"] != serde_json::Value::Null &&
