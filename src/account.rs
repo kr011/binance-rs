@@ -395,13 +395,14 @@ impl Account {
     }
 
     // Check an order's status
-    pub fn cancel_order<S>(&self, symbol: S, order_id: u64) -> Result<OrderCanceled>
+    pub fn cancel_order<S>(&self, symbol: S, orig_client_order_id: u64) -> Result<OrderCanceled>
     where
         S: Into<String>,
     {
         let mut parameters: BTreeMap<String, String> = BTreeMap::new();
         parameters.insert("symbol".into(), symbol.into());
-        parameters.insert("orderId".into(), order_id.to_string());
+        // parameters.insert("orderId".into(), order_id.to_string());
+        parameters.insert("origClientOrderId".into(), orig_client_order_id.to_string());
 
         let request = build_signed_request(parameters, self.recv_window)?;
         let data = self.client.delete_signed(API_V3_ORDER, &request)?;
@@ -413,13 +414,14 @@ impl Account {
     /// Place a test cancel order
     ///
     /// This order is sandboxed: it is validated, but not sent to the matching engine.
-    pub fn test_cancel_order<S>(&self, symbol: S, order_id: u64) -> Result<()>
+    pub fn test_cancel_order<S>(&self, symbol: S, orig_client_order_id: u64) -> Result<()>
     where
         S: Into<String>,
     {
         let mut parameters: BTreeMap<String, String> = BTreeMap::new();
         parameters.insert("symbol".into(), symbol.into());
-        parameters.insert("orderId".into(), order_id.to_string());
+        // parameters.insert("orderId".into(), order_id.to_string());
+        parameters.insert("origClientOrderId".into(), orig_client_order_id.to_string());
 
         let request = build_signed_request(parameters, self.recv_window)?;
         let data = self.client.delete_signed(API_V3_ORDER_TEST, &request)?;
