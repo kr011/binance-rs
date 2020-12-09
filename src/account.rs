@@ -35,6 +35,7 @@ struct OrderRequest {
     pub order_type: String,
     pub time_in_force: String,
     pub new_order_resp_type: String,
+    pub new_client_order_id: String,
 }
 
 impl Account {
@@ -190,7 +191,7 @@ impl Account {
     }
 
     // Place a LIMIT order - BUY
-    pub fn limit_buy<S, F>(&self, symbol: S, qty: F, price: f64) -> Result<FuturesTransaction>
+    pub fn limit_buy<S, F>(&self, symbol: S, qty: F, price: f64, new_client_order_id: String) -> Result<FuturesTransaction>
     where
         S: Into<String>,
         F: Into<f64>,
@@ -204,6 +205,7 @@ impl Account {
             time_in_force: TIME_IN_FORCE_GTX.to_string(),
             // new_order_resp_type: NEW_ORDER_RESP_TYPE_ACK.to_string(),
             new_order_resp_type: NEW_ORDER_RESP_TYPE_RESULT.to_string(),
+            new_client_order_id: new_client_order_id,
         };
         let order = self.build_order(buy);
         let request = build_signed_request(order, self.recv_window)?;
@@ -216,7 +218,7 @@ impl Account {
     /// Place a test limit order - BUY
     ///
     /// This order is sandboxed: it is validated, but not sent to the matching engine.
-    pub fn test_limit_buy<S, F>(&self, symbol: S, qty: F, price: f64) -> Result<()>
+    pub fn test_limit_buy<S, F>(&self, symbol: S, qty: F, price: f64, new_client_order_id: String) -> Result<()>
     where
         S: Into<String>,
         F: Into<f64>,
@@ -230,6 +232,7 @@ impl Account {
             time_in_force: TIME_IN_FORCE_GTX.to_string(),
             // new_order_resp_type: NEW_ORDER_RESP_TYPE_ACK.to_string(),
             new_order_resp_type: NEW_ORDER_RESP_TYPE_RESULT.to_string(),
+            new_client_order_id: new_client_order_id,
         };
         let order = self.build_order(buy);
         let request = build_signed_request(order, self.recv_window)?;
@@ -240,7 +243,7 @@ impl Account {
     }
 
     // Place a LIMIT order - SELL
-    pub fn limit_sell<S, F>(&self, symbol: S, qty: F, price: f64) -> Result<FuturesTransaction>
+    pub fn limit_sell<S, F>(&self, symbol: S, qty: F, price: f64, new_client_order_id: String) -> Result<FuturesTransaction>
     where
         S: Into<String>,
         F: Into<f64>,
@@ -254,6 +257,7 @@ impl Account {
             time_in_force: TIME_IN_FORCE_GTX.to_string(),
             // new_order_resp_type: NEW_ORDER_RESP_TYPE_ACK.to_string(),
             new_order_resp_type: NEW_ORDER_RESP_TYPE_RESULT.to_string(),
+            new_client_order_id: new_client_order_id,
         };
         let order = self.build_order(sell);
         let request = build_signed_request(order, self.recv_window)?;
@@ -266,7 +270,7 @@ impl Account {
     /// Place a test LIMIT order - SELL
     ///
     /// This order is sandboxed: it is validated, but not sent to the matching engine.
-    pub fn test_limit_sell<S, F>(&self, symbol: S, qty: F, price: f64) -> Result<()>
+    pub fn test_limit_sell<S, F>(&self, symbol: S, qty: F, price: f64, new_client_order_id: String) -> Result<()>
     where
         S: Into<String>,
         F: Into<f64>,
@@ -280,6 +284,7 @@ impl Account {
             time_in_force: TIME_IN_FORCE_GTX.to_string(),
             // new_order_resp_type: NEW_ORDER_RESP_TYPE_ACK.to_string(),
             new_order_resp_type: NEW_ORDER_RESP_TYPE_RESULT.to_string(),
+            new_client_order_id: new_client_order_id,
         };
         let order = self.build_order(sell);
         let request = build_signed_request(order, self.recv_window)?;
@@ -290,7 +295,7 @@ impl Account {
     }
 
     // Place a MARKET order - BUY
-    pub fn market_buy<S, F>(&self, symbol: S, qty: F) -> Result<FuturesTransaction>
+    pub fn market_buy<S, F>(&self, symbol: S, qty: F, new_client_order_id: String) -> Result<FuturesTransaction>
     where
         S: Into<String>,
         F: Into<f64>,
@@ -303,6 +308,7 @@ impl Account {
             order_type: ORDER_TYPE_MARKET.to_string(),
             time_in_force: TIME_IN_FORCE_GTC.to_string(),
             new_order_resp_type: NEW_ORDER_RESP_TYPE_RESULT.to_string(),
+            new_client_order_id: new_client_order_id,
         };
         let order = self.build_order(buy);
         let request = build_signed_request(order, self.recv_window)?;
@@ -315,7 +321,7 @@ impl Account {
     /// Place a test MARKET order - BUY
     ///
     /// This order is sandboxed: it is validated, but not sent to the matching engine.
-    pub fn test_market_buy<S, F>(&self, symbol: S, qty: F) -> Result<()>
+    pub fn test_market_buy<S, F>(&self, symbol: S, qty: F, new_client_order_id: String) -> Result<()>
     where
         S: Into<String>,
         F: Into<f64>,
@@ -328,6 +334,7 @@ impl Account {
             order_type: ORDER_TYPE_MARKET.to_string(),
             time_in_force: TIME_IN_FORCE_GTC.to_string(),
             new_order_resp_type: NEW_ORDER_RESP_TYPE_RESULT.to_string(),
+            new_client_order_id: new_client_order_id,
         };
         let order = self.build_order(buy);
         let request = build_signed_request(order, self.recv_window)?;
@@ -338,7 +345,7 @@ impl Account {
     }
 
     // Place a MARKET order - SELL
-    pub fn market_sell<S, F>(&self, symbol: S, qty: F) -> Result<FuturesTransaction>
+    pub fn market_sell<S, F>(&self, symbol: S, qty: F, new_client_order_id: String) -> Result<FuturesTransaction>
     where
         S: Into<String>,
         F: Into<f64>,
@@ -351,6 +358,7 @@ impl Account {
             order_type: ORDER_TYPE_MARKET.to_string(),
             time_in_force: TIME_IN_FORCE_GTC.to_string(),
             new_order_resp_type: NEW_ORDER_RESP_TYPE_RESULT.to_string(),
+            new_client_order_id: new_client_order_id,
         };
         let order = self.build_order(sell);
         let request = build_signed_request(order, self.recv_window)?;
@@ -363,7 +371,7 @@ impl Account {
     /// Place a test MARKET order - SELL
     ///
     /// This order is sandboxed: it is validated, but not sent to the matching engine.
-    pub fn test_market_sell<S, F>(&self, symbol: S, qty: F) -> Result<()>
+    pub fn test_market_sell<S, F>(&self, symbol: S, qty: F, new_client_order_id: String) -> Result<()>
     where
         S: Into<String>,
         F: Into<f64>,
@@ -376,6 +384,7 @@ impl Account {
             order_type: ORDER_TYPE_MARKET.to_string(),
             time_in_force: TIME_IN_FORCE_GTC.to_string(),
             new_order_resp_type: NEW_ORDER_RESP_TYPE_RESULT.to_string(),
+            new_client_order_id: new_client_order_id,
         };
         let order = self.build_order(sell);
         let request = build_signed_request(order, self.recv_window)?;
@@ -442,6 +451,7 @@ impl Account {
         order_parameters.insert("type".into(), order.order_type);
         order_parameters.insert("quantity".into(), order.qty.to_string());
         order_parameters.insert("newOrderRespType".into(), order.new_order_resp_type);
+        order_parameters.insert("newClientOrderId".into(), order.new_client_order_id);
 
         if order.price != 0.0 {
             order_parameters.insert("price".into(), order.price.to_string());

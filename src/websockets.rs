@@ -1,7 +1,6 @@
 use crate::model::*;
 use crate::errors::*;
 use url::Url;
-use serde_json::from_str;
 use serde_json::from_value;
 
 use std::sync::atomic::{AtomicBool, Ordering};
